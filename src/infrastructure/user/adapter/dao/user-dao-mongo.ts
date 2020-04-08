@@ -11,10 +11,31 @@ export class UserDaoMongo implements UserDao {
   ) {}  
 
   async list(): Promise<UserDTO[]> {
-    return await this.entityManager.find(UserEntity,{});
+    const entities = await this.entityManager.find(UserEntity,{});
+    let listReturn = Array<UserDTO>();
+    entities.forEach(ent => {
+      let entDto = new UserDTO();
+      entDto.id = ent.id.toString();
+      entDto.name = ent.name;
+      entDto.description = ent.description;
+      entDto.createDate = ent.createDate;
+      listReturn.push(entDto);
+    });
+    return Promise.resolve(listReturn);
   }
 
   async find(name: string): Promise<UserDTO> {
-    return await this.entityManager.findOne(UserEntity,{name: name});
+    const userEnt = await this.entityManager.findOne(UserEntity,{name: name});
+    let ent: UserDTO = null;
+    if(userEnt !== null && userEnt !== undefined) {
+      ent = new UserDTO();
+      ent.id = userEnt.id.toString();
+      ent.name = userEnt.name;
+      ent.description = userEnt.description;
+      ent.createDate = userEnt.createDate;
+      ent.avatar = userEnt.avatar;
+    }
+    
+    return Promise.resolve(ent);
   }
 }
