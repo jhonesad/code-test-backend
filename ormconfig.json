@@ -1,0 +1,10 @@
+{
+    "type": "mongodb",
+    "url": "mongodb+srv://root:root@cluster0-mkvep.mongodb.net/test?retryWrites=true&w=majority",
+    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "migrationsTableName": "migration_history",
+    "migrations": ["dist/infrastructure/migrations/*.js"],
+    "cli": {
+      "migrationsDir": "src/infrastructure/migrations"
+    }
+  }
